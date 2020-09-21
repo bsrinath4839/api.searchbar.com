@@ -1,12 +1,9 @@
 const { Store } = require('../Models')
-const { Model } = require('mongoose')
-
-
 
 const terms = [];
 
 const getData = async (findOption, cb) => {   
-    await Store.find({ $text: { $search: findOption } })
+    await Store.find({ $text: { "$regex": findOption, "$options" : "i" } })
         .populate(terms)
         .exec({}, cb);
 }
